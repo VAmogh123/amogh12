@@ -1,0 +1,187 @@
+import java.util.*;
+
+class CustomArray {
+    private int[] array;
+    private int size;
+
+    public CustomArray(int capacity) {
+        array = new int[capacity];
+        size = 0;
+    }
+
+    public void add(int value) {
+        if (size < array.length) {
+            array[size++] = value;
+        }
+    }
+
+    public void remove(int index) {
+        if (index >= 0 && index < size) {
+            for (int i = index; i < size - 1; i++) {
+                array[i] = array[i + 1];
+            }
+            size--;
+        }
+    }
+
+    public int get(int index) {
+        if (index >= 0 && index < size) {
+            return array[index];
+        }
+        return -1;
+    }
+
+    public int size() {
+        return size;
+    }
+}
+
+class CustomStack {
+    private List<Integer> stack;
+
+    public CustomStack() {
+        stack = new ArrayList<>();
+    }
+
+    public void push(int value) {
+        stack.add(value);
+    }
+
+    public int pop() {
+        if (!stack.isEmpty()) {
+            return stack.remove(stack.size() - 1);
+        }
+        return -1;
+    }
+
+    public int peek() {
+        if (!stack.isEmpty()) {
+            return stack.get(stack.size() - 1);
+        }
+        return -1;
+    }
+
+    public int size() {
+        return stack.size();
+    }
+}
+
+class CustomQueue {
+    private LinkedList<Integer> queue;
+
+    public CustomQueue() {
+        queue = new LinkedList<>();
+    }
+
+    public void enqueue(int value) {
+        queue.addLast(value);
+    }
+
+    public int dequeue() {
+        if (!queue.isEmpty()) {
+            return queue.removeFirst();
+        }
+        return -1;
+    }
+
+    public int peek() {
+        if (!queue.isEmpty()) {
+            return queue.getFirst();
+        }
+        return -1;
+    }
+
+    public int size() {
+        return queue.size();
+    }
+}
+
+class CustomLinkedList {
+    private Node head;
+    private int size;
+
+    private static class Node {
+        int value;
+        Node next;
+
+        Node(int value) {
+            this.value = value;
+            this.next = null;
+        }
+    }
+
+    public CustomLinkedList() {
+        head = null;
+        size = 0;
+    }
+
+    public void add(int value) {
+        Node newNode = new Node(value);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+        size++;
+    }
+
+    public void remove(int index) {
+        if (index >= 0 && index < size) {
+            if (index == 0) {
+                head = head.next;
+            } else {
+                Node current = head;
+                for (int i = 0; i < index - 1; i++) {
+                    current = current.next;
+                }
+                current.next = current.next.next;
+            }
+            size--;
+        }
+    }
+
+    public int get(int index) {
+        if (index >= 0 && index < size) {
+            Node current = head;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
+            return current.value;
+        }
+        return -1;
+    }
+
+    public int size() {
+        return size;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        CustomArray customArray = new CustomArray(10);
+        customArray.add(5);
+        customArray.add(10);
+        customArray.remove(0);
+        System.out.println("CustomArray: " + customArray.get(0));
+
+        CustomStack customStack = new CustomStack();
+        customStack.push(20);
+        customStack.push(30);
+        System.out.println("CustomStack: " + customStack.pop());
+
+        CustomQueue customQueue = new CustomQueue();
+        customQueue.enqueue(40);
+        customQueue.enqueue(50);
+        System.out.println("CustomQueue: " + customQueue.dequeue());
+
+        CustomLinkedList customLinkedList = new CustomLinkedList();
+        customLinkedList.add(60);
+        customLinkedList.add(70);
+        customLinkedList.remove(0);
+        System.out.println("CustomLinkedList: " + customLinkedList.get(0));
+    }
+}
